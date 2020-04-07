@@ -85,11 +85,14 @@ class DataSearch extends SearchDelegate {
             children: movies.map( (movie) {
 
               return ListTile(
-                leading: FadeInImage( 
-                  image: NetworkImage( movie.getPosterImg() ), 
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  width: 50.0,
-                  fit: BoxFit.contain,
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: FadeInImage( 
+                    image: NetworkImage( movie.getPosterImg() ), 
+                    placeholder: AssetImage('assets/img/no-image.jpg'),
+                    width: 45.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
 
                 title: Text( movie.title ),
