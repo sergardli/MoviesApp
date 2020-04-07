@@ -83,4 +83,12 @@ class Movie {
       return 'https://image.tmdb.org/t/p/w500/$posterPath';
   }
 
+
+  getBackdropImg() {
+    
+    if( backdropPath == null )
+      return  'https://lh3.googleusercontent.com/proxy/PyT8dpQT8UKgbzlIFz6VuvYLpMVHwcnV9b2GTu4t1J9v8nLsUmcdAGE6pbmwXCZLRMrx2dsLnm_j7JjYoXHejl4nTu42FqxvGw3YHDk3FcWhOn-cghhzc2y3swPmcnLsivQTbV3dTDC-7w';
+    else
+      return 'https://image.tmdb.org/t/p/w500/$backdropPath';
+  }
 }
