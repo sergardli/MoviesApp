@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies/src/providers/actors_provider.dart';
 
 import 'package:movies/src/providers/movies_provider.dart';
 
@@ -79,7 +80,7 @@ class MovieDetailPage extends StatelessWidget {
       padding: EdgeInsets.symmetric( horizontal: 20.0 ),
       child: Row(
         children: <Widget>[
-          Hero(
+          /*Hero(
             tag: movie.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
@@ -87,6 +88,14 @@ class MovieDetailPage extends StatelessWidget {
                 image: NetworkImage( movie.getPosterImg() ),
                 height: 150.0,
               ),
+            ),
+          ), */
+
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image(
+              image: NetworkImage( movie.getPosterImg() ),
+              height: 150.0,
             ),
           ),
 
@@ -164,7 +173,8 @@ class MovieDetailPage extends StatelessWidget {
 
   Widget _actorCard(BuildContext context, Actor actor) {
     
-    return Container(
+    // ActorsProvider actorProvider = new ActorsProvider();
+    final actorCard = Container(
       child: Column(
         children: <Widget>[
           ClipRRect(
@@ -184,6 +194,15 @@ class MovieDetailPage extends StatelessWidget {
            )
         ],
       ),
+    );
+
+
+    return GestureDetector(
+      child: actorCard,
+      onTap: () {
+        
+        Navigator.pushNamed(context, 'actorDetails', arguments: actor);
+      },
     );
   }
 

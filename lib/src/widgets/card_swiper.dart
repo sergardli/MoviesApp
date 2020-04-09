@@ -26,7 +26,7 @@ class CardSwiper extends StatelessWidget {
         control: SwiperControl(), 
         */
         layout: SwiperLayout.STACK,
-        itemWidth: _sizeScreen.width * 0.6,
+        itemWidth: _sizeScreen.width * 0.5,
         itemHeight: _sizeScreen.height * 0.5,
         itemCount: movies.length,
 
@@ -34,7 +34,7 @@ class CardSwiper extends StatelessWidget {
 
           movies[index].uniqueId = '${movies[index].id}-cardSwiper';
 
-          return Hero(
+          /*return Hero(
             tag: movies[index].uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular( 20.0 ),
@@ -48,6 +48,19 @@ class CardSwiper extends StatelessWidget {
                 onTap: () => Navigator.pushNamed(context, 'movieDetails', arguments: movies[index]),
               )
             ),
+          ); */
+
+          return ClipRRect(
+            borderRadius: BorderRadius.circular( 20.0 ),
+            child: GestureDetector(
+              child: FadeInImage(
+                placeholder: AssetImage( 'assets/img/loading.gif' ), 
+                image: NetworkImage( movies[index].getPosterImg() ),
+                fit: BoxFit.cover,
+              ),
+
+              onTap: () => Navigator.pushNamed(context, 'movieDetails', arguments: movies[index]),
+            )
           );
         },
       ),
