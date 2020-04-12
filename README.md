@@ -4,4 +4,4 @@ A new Flutter project.
 
 ## TODO
 
-1.- Corregir problema que hace que pete las películas de los actores
+1.- Arreglar que se adapte a la pantalla de los móviles!

@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     moviesProvider.getPopulars();
-
+    moviesProvider.getTopRated();
 
     return Scaffold(
       appBar: AppBar(
@@ -34,13 +34,24 @@ class HomePage extends StatelessWidget {
       ),
 
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-
+        child: ListView(
           children: <Widget>[
+            Center(
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Text("Actualmente en el cine", style: Theme.of(context).textTheme.title)
+              ),
+            ),
             _swiperCards(),
-            SizedBox(height: 35),
-            _footer(context)
+            SizedBox(height: 45),
+            Container(
+              padding: EdgeInsets.only(left: 15.0),
+              child: Text("Listas de películas", style: Theme.of(context).textTheme.title)
+            ),
+            SizedBox(height: 5.0),
+            _footer(context),
+            SizedBox(height: 5),
+            _footer2(context),
           ],
         ),
       ),
@@ -93,4 +104,35 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+
+  Widget _footer2(BuildContext context) {  
+
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.only(left: 15.0),
+            child: Text('Mejor valoradas', style: Theme.of(context).textTheme.subhead)
+          ),
+
+          SizedBox(height: 10),
+          
+          StreamBuilder(
+            stream: moviesProvider.topRatedStream,
+            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+              if( snapshot.hasData ) 
+                return MovieHorizontal(
+                  movies: snapshot.data,
+                  nextPage: moviesProvider.getTopRated);
+              else
+                return Center(child: CircularProgressIndicator());
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
 }

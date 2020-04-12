@@ -185,7 +185,4 @@ class ActorDetails extends StatelessWidget {
       },
     );
   }
-
-
-
 }

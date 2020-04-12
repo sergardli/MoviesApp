@@ -15,9 +15,13 @@ class MoviesProvider {
   String _language   = 'es-ES';
 
   int _popularPage   = 0;
-  bool _loadingData  = false;
+  int _topRatedPage  = 0;
+  bool _loadingDataPopulars  = false;
+  bool _loadingDataTopRated  = false;
+  
 
-  List<Movie> _populars = new List();
+  List<Movie> _populars  = new List();
+  List<Movie> _topRateds = new List();
 
 
   final _popularsStreamController = StreamController<List<Movie>>.broadcast();
@@ -25,11 +29,18 @@ class MoviesProvider {
   Stream<List<Movie>> get popularsStream => _popularsStreamController.stream;
 
 
+  final _topRatedStreamController = StreamController<List<Movie>>.broadcast();
+  Function(List<Movie>) get topRatedSink => _topRatedStreamController.sink.add;
+  Stream<List<Movie>> get topRatedStream => _topRatedStreamController.stream;
+
+
+
   /**
    * Cerrar los Streams
    */
   void disposeStream() {
     _popularsStreamController.close();
+    _topRatedStreamController.close();
   }
 
 
@@ -66,7 +77,7 @@ class MoviesProvider {
    */
   Future<List<Movie>> getPopulars() async {
   
-    if (_loadingData) return[];
+    if (_loadingDataPopulars) return[];
 
     _popularPage++;
 
@@ -81,10 +92,37 @@ class MoviesProvider {
     _populars.addAll(resp);
     popularsSink(_populars);
 
-    _loadingData = false;
+    _loadingDataPopulars = false;
 
     return resp;
   }
+
+
+  /**
+   * Obtiene las películas más populares
+   */
+  Future<List<Movie>> getTopRated() async {
+  
+    if (_loadingDataTopRated) return[];
+
+    _topRatedPage++;
+
+    final url = Uri.https(_url, '3/movie/top_rated', {
+    'api_key'  : _apikey,
+    'language' : _language,
+    'page'     : _topRatedPage.toString()
+  });
+
+    final resp = await _processResponse(url);
+
+    _topRateds.addAll(resp);
+    topRatedSink(_topRateds);
+
+    _loadingDataTopRated = false;
+
+    return resp;
+  }
+
 
 
   /**
